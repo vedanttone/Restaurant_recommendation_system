@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>No Results Found — MealMind</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --green: #38bdf8; /* primary sky blue */
+        --green-dark: #0ea5e9; /* hover blue */
+        --green-light: #e0f2fe; /* light background */
+        --green-mid: #7dd3fc;
+
+        --white: #ffffff;
+
+        --bg: linear-gradient(145deg, #f8fbff 0%, #e0f2fe 60%, #f0f9ff 100%);
+
+        --text: #0f172a; /* deep gamer navy */
+        --muted: #475569; /* slate tone */
+
+        --shadow-sm: 0 2px 12px rgba(56, 189, 248, 0.12);
+        --shadow-md: 0 8px 32px rgba(56, 189, 248, 0.18);
+
+        --border: #bae6fd;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── NAVBAR ── */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 60px;
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        position: relative;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--green);
+        text-decoration: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+        margin-left: 28px;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--green);
+      }
+
+      /* ── ERROR BODY ── */
+      .page-body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 24px;
+      }
+
+      .error-card {
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 24px;
+        box-shadow:
+          0 4px 24px rgba(56, 189, 248, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        padding: 60px 52px;
+        max-width: 520px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .error-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--green), #00b4d8);
+      }
+
+      .error-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--green-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 28px;
+      }
+      .error-icon i {
+        font-size: 32px;
+        color: var(--green);
+      }
+
+      .error-card h1 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 14px;
+      }
+
+      .error-message {
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 36px;
+        background: rgba(255, 248, 243, 0.8);
+        padding: 16px 20px;
+        border-radius: 12px;
+        border-left: 4px solid var(--green-light);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--green);
+        color: var(--white);
+        padding: 12px 28px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.25s;
+      }
+      .btn-primary:hover {
+        background: var(--green-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
+      }
+
+      .btn-outline {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 2px solid var(--green);
+        color: var(--green);
+        padding: 11px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.25s;
+      }
+      .btn-outline:hover {
+        background: var(--green-light);
+      }
+
+      .tips {
+        margin-top: 36px;
+        border-top: 1px solid #ffd0b5;
+        padding-top: 28px;
+        text-align: left;
+      }
+      .tips h3 {
+        font-size: 13px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+      .tips ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .tips li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .tips li i {
+        color: var(--green);
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        text-align: center;
+        padding: 24px;
+        color: var(--muted);
+        font-size: 13px;
+        border-top: 1px solid #ffd0b5;
+      }
+
+      /* ── HAMBURGER ── */
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+        background: none;
+        border: none;
+      }
+      .nav-toggle span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--green);
+        border-radius: 2px;
+      }
+
+      @media (max-width: 1024px) {
+        nav {
+          padding: 16px 32px;
+        }
+        .error-card {
+          padding: 50px 40px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        nav {
+          padding: 14px 20px;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--white);
+          flex-direction: column;
+          gap: 0;
+          padding: 12px 0 16px;
+          box-shadow: 0 8px 24px rgba(56, 189, 248, 0.12);
+          z-index: 200;
+        }
+        .nav-links.open {
+          display: flex;
+        }
+        .nav-links a {
+          padding: 12px 24px;
+          margin-left: 0;
+          font-size: 15px;
+          border-bottom: 1px solid #fff5ee;
+        }
+        .error-card {
+          padding: 40px 22px;
+        }
+        .error-card h1 {
+          font-size: 20px;
+        }
+        .btn-group {
+          flex-direction: column;
+          align-items: center;
+        }
+        .btn-primary,
+        .btn-outline {
+          width: 100%;
+          max-width: 260px;
+          justify-content: center;
+        }
+        .page-body {
+          padding: 40px 16px;
+        }
+        footer {
+          font-size: 12px;
+          padding: 18px 16px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .error-card {
+          padding: 32px 16px;
+        }
+        .error-icon {
+          width: 64px;
+          height: 64px;
+        }
+        .error-icon i {
+          font-size: 26px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-brand" href="/">
+        <svg
+          width="36"
+          height="36"
+          viewBox="0 0 42 42"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            width="42"
+            height="42"
+            rx="12"
+            fill="white"
+            stroke="#5aa7ff"
+            stroke-width="1.5"
+          />
+          <path
+            d="M15 10 L15 20 Q15 25 21 25 Q27 25 27 20 L27 10"
+            stroke="#5aa7ff"
+            stroke-width="2.2"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M21 25 L21 32"
+            stroke="#5aa7ff"
+            stroke-width="2.2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M16 32 L26 32"
+            stroke="#5aa7ff"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <circle cx="31" cy="12" r="4" fill="#ff8c5a" />
+          <path
+            d="M29.5 12 L30.5 13 L32.5 11"
+            stroke="white"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        MealMind
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/recommend">Search</a>
+      </div>
+    </nav>
+    <script>
+      document
+        .getElementById("navToggle")
+        .addEventListener("click", function () {
+          document.getElementById("navLinks").classList.toggle("open");
+        });
+    </script>
+
+    <div class="page-body">
+      <div class="error-card">
+        <div class="error-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <h1>No Results Found</h1>
+
+        <div class="error-message">{{ message }}</div>
+
+        <div class="btn-group">
+          <a href="/recommend" class="btn-primary"
+            ><i class="fa-solid fa-rotate-left"></i> Try Again</a
+          >
+          <a href="/" class="btn-outline"
+            ><i class="fa-solid fa-house"></i> Home</a
+          >
+        </div>
+
+        <div class="tips">
+          <h3>Helpful Tips</h3>
+          <ul>
+            <li>
+              <i class="fa-solid fa-circle-info"></i> Double-check the
+              restaurant name spelling
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-info"></i> Try selecting "Any
+              Cuisine" and "Any Budget" to broaden results
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-info"></i> Partial names may not
+              match — use the full restaurant name
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-info"></i> Lower the minimum rating
+              to see more options
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © 2026 MealMind &nbsp;·&nbsp; Developed by ·&nbsp; VEDANT TONE
+    </footer>
+  </body>
+</html>

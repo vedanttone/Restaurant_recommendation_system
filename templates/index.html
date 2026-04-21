@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MealMind — Smart Restaurant Recommendations</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --green: #38bdf8; /* primary sky blue */
+        --green-dark: #0ea5e9; /* hover blue */
+        --green-light: #e0f2fe; /* light background */
+        --green-mid: #7dd3fc;
+
+        --white: #ffffff;
+
+        --bg: linear-gradient(145deg, #f8fbff 0%, #e0f2fe 60%, #f0f9ff 100%);
+
+        --text: #0f172a; /* deep gamer navy */
+        --muted: #475569; /* slate tone */
+
+        --shadow-sm: 0 2px 12px rgba(56, 189, 248, 0.12);
+        --shadow-md: 0 8px 32px rgba(56, 189, 248, 0.18);
+
+        --border: #bae6fd;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      /* ── NAVBAR ── */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 60px;
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--green);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--green);
+      }
+      .nav-cta {
+        background: var(--green) !important;
+        color: var(--white) !important;
+        padding: 9px 22px;
+        border-radius: 50px;
+        font-weight: 600 !important;
+      }
+      .nav-cta:hover {
+        background: var(--green-dark) !important;
+        color: var(--white) !important;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 100px 24px 60px;
+      }
+      @keyframes badgePulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(56, 189, 248,0.3);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(56, 189, 248,0);
+        }
+      }
+      @keyframes sparkSpin {
+        0% {
+          transform: rotate(0deg) scale(1);
+        }
+        50% {
+          transform: rotate(20deg) scale(1.2);
+        }
+        100% {
+          transform: rotate(0deg) scale(1);
+        }
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #ffffff, #e0f2fe);
+        color: var(--green);
+        font-size: 13px;
+        font-weight: 700;
+        padding: 10px 22px;
+        border-radius: 50px;
+        margin-bottom: 28px;
+        border: 1.5px solid rgba(56, 189, 248,0.2);
+        box-shadow:
+          0 4px 20px rgba(56, 189, 248,0.15),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        animation: badgePulse 2.5s ease-in-out infinite;
+        letter-spacing: 0.3px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-badge::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -60%;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.6),
+          transparent
+        );
+        animation: badgeShine 3s ease-in-out infinite;
+      }
+      @keyframes badgeShine {
+        0% {
+          left: -60%;
+        }
+        60%,
+        100% {
+          left: 130%;
+        }
+      }
+      .hero-badge i {
+        animation: sparkSpin 2s ease-in-out infinite;
+        color: #f4a614;
+        font-size: 14px;
+      }
+      .hero-badge .badge-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--green);
+        border-radius: 50%;
+        display: inline-block;
+        animation: badgePulse 1.5s ease-in-out infinite;
+      }
+      .hero h1 {
+        font-size: clamp(32px, 5vw, 56px);
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.2;
+        max-width: 720px;
+        margin-bottom: 20px;
+      }
+      .hero h1 span {
+        color: var(--green);
+      }
+      .hero p {
+        font-size: 17px;
+        color: var(--muted);
+        max-width: 520px;
+        line-height: 1.7;
+        margin-bottom: 40px;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .btn-primary {
+        background: var(--green);
+        color: var(--white);
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        box-shadow: 0 4px 16px rgba(56, 189, 248,0.3);
+        transition: all 0.25s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-primary:hover {
+        background: var(--green-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(56, 189, 248,0.35);
+      }
+      .btn-outline {
+        border: 2px solid var(--green);
+        color: var(--green);
+        padding: 13px 28px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        transition: all 0.25s;
+      }
+      .btn-outline:hover {
+        background: var(--green-light);
+      }
+
+      /* ── STATS ── */
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        padding: 0 60px 60px;
+        max-width: 1100px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .stats-strip {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        gap: 0;
+        overflow: hidden;
+      }
+      .stat {
+        flex: 1;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+      }
+      .stat:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 15%;
+        bottom: 15%;
+        width: 1px;
+        background: rgba(56, 189, 248,0.2);
+      }
+      .stat-num {
+        font-size: 42px;
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .stat-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+
+      /* ── FEATURES ── */
+      .section {
+        padding: 60px 60px 40px;
+      }
+      .section-title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 800;
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, var(--text), var(--green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .section-sub {
+        text-align: center;
+        color: var(--muted);
+        font-size: 15px;
+        margin-bottom: 48px;
+      }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .feature-card {
+        background: var(--white);
+        padding: 36px 26px 30px;
+        border-radius: 22px;
+        box-shadow: var(--shadow-sm);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+        border: 1.5px solid transparent;
+      }
+      .feature-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(56, 189, 248,0.18);
+        border-color: rgba(56, 189, 248,0.15);
+      }
+      .feature-icon {
+        width: 58px;
+        height: 58px;
+        background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: white;
+        box-shadow: 0 6px 18px rgba(56, 189, 248,0.3);
+        transition: transform 0.3s;
+      }
+      .feature-card:hover .feature-icon {
+        transform: scale(1.08) rotate(-4deg);
+      }
+      .feature-card h3 {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--text);
+      }
+      .feature-card p {
+        font-size: 13.5px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .feature-card .card-number {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        font-size: 42px;
+        font-weight: 900;
+        color: rgba(56, 189, 248,0.06);
+        line-height: 1;
+        user-select: none;
+      }
+
+      /* ── CTA STRIP ── */
+      .cta-strip {
+        margin: 20px 60px 60px;
+        background: linear-gradient(
+          135deg,
+          var(--green) 0%,
+          var(--green-dark) 100%
+        );
+        border-radius: 24px;
+        padding: 56px 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+      .cta-strip h2 {
+        font-size: 26px;
+        color: var(--white);
+        font-weight: 700;
+      }
+      .cta-strip p {
+        color: rgba(255, 255, 255, 0.75);
+        margin-top: 6px;
+        font-size: 14px;
+      }
+      .btn-white {
+        background: var(--white);
+        color: var(--green);
+        padding: 13px 28px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 15px;
+        text-decoration: none;
+        transition: all 0.25s;
+        white-space: nowrap;
+      }
+      .btn-white:hover {
+        background: var(--green-light);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        text-align: center;
+        padding: 28px;
+        color: var(--muted);
+        font-size: 13px;
+        border-top: 1px solid #ffd0b5;
+      }
+
+      /* ── HAMBURGER ── */
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+        background: none;
+        border: none;
+      }
+      .nav-toggle span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--green);
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+
+      /* ── TABLET ── */
+      @media (max-width: 1024px) {
+        nav {
+          padding: 16px 32px;
+        }
+        .section {
+          padding: 50px 32px 30px;
+        }
+        .stats-row {
+          padding: 0 32px 40px;
+        }
+        .cta-strip {
+          margin: 20px 32px 50px;
+          padding: 44px 36px;
+        }
+        .features {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .hero {
+          padding: 80px 24px 50px;
+        }
+      }
+
+      /* ── MOBILE ── */
+      @media (max-width: 768px) {
+        body {
+          overflow-x: hidden;
+        }
+        nav {
+          padding: 14px 20px;
+          position: relative;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--white);
+          flex-direction: column;
+          gap: 0;
+          padding: 8px 0 12px;
+          box-shadow: 0 8px 24px rgba(56, 189, 248,0.12);
+          z-index: 999;
+        }
+        .nav-links.open {
+          display: flex;
+        }
+        .nav-links a {
+          padding: 12px 24px;
+          margin-left: 0;
+          font-size: 15px;
+          border-bottom: 1px solid #fff5ee;
+        }
+        .nav-cta {
+          margin: 8px 20px 0 !important;
+          border-radius: 50px !important;
+          text-align: center;
+        }
+        .hero {
+          padding: 48px 20px 32px;
+        }
+        .hero p {
+          font-size: 15px;
+        }
+        .hero-badge {
+          font-size: 11px;
+          padding: 8px 14px;
+          max-width: 90vw;
+          white-space: normal;
+          line-height: 1.4;
+        }
+        .hero-btns {
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+        .btn-primary,
+        .btn-outline {
+          width: 100%;
+          max-width: 300px;
+          justify-content: center;
+        }
+        .stats-row {
+          padding: 0 16px 32px;
+          width: 100%;
+        }
+        .stats-strip {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1px;
+          background: rgba(56, 189, 248,0.12);
+          border-radius: 16px;
+          overflow: hidden;
+          width: 100%;
+        }
+        .stat {
+          background: white;
+          padding: 20px 12px;
+          flex: unset;
+        }
+        .stat:not(:last-child)::after {
+          display: none;
+        }
+        .stat-num {
+          font-size: 28px;
+        }
+        .stat-label {
+          font-size: 10px;
+          letter-spacing: 0.5px;
+        }
+        .section {
+          padding: 36px 16px 16px;
+        }
+        .section-title {
+          font-size: 22px;
+        }
+        .section-sub {
+          font-size: 13px;
+        }
+        .features {
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+        .feature-card {
+          padding: 20px 14px 18px;
+          border-radius: 16px;
+        }
+        .feature-card h3 {
+          font-size: 13px;
+        }
+        .feature-card p {
+          font-size: 12px;
+        }
+        .feature-icon {
+          width: 44px;
+          height: 44px;
+          font-size: 18px;
+          margin-bottom: 14px;
+        }
+        .card-number {
+          font-size: 32px;
+        }
+        .cta-strip {
+          margin: 16px 16px 36px;
+          padding: 28px 20px;
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+        .cta-strip h2 {
+          font-size: 20px;
+        }
+        .btn-white {
+          width: 100%;
+          text-align: center;
+        }
+        footer {
+          font-size: 12px;
+          padding: 18px 16px;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .hero h1 {
+          font-size: 26px;
+        }
+        .features {
+          grid-template-columns: 1fr;
+        }
+        .stat-num {
+          font-size: 26px;
+        }
+        .btn-primary,
+        .btn-outline {
+          font-size: 14px;
+          padding: 12px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-brand" href="/">
+        <svg
+          width="36"
+          height="36"
+          viewBox="0 0 42 42"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            width="42"
+            height="42"
+            rx="12"
+            fill="white"
+            stroke="#5aa7ff"
+            stroke-width="1.5"
+          />
+          <path
+            d="M15 10 L15 20 Q15 25 21 25 Q27 25 27 20 L27 10"
+            stroke="#5aa7ff"
+            stroke-width="2.2"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M21 25 L21 32"
+            stroke="#5aa7ff"
+            stroke-width="2.2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M16 32 L26 32"
+            stroke="#5aa7ff"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <circle cx="31" cy="12" r="4" fill="#5aa7ff" />
+          <path
+            d="M29.5 12 L30.5 13 L32.5 11"
+            stroke="white"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        MealMind
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/recommend">Explore</a>
+        <a href="/recommend" class="nav-cta">Get Started</a>
+      </div>
+    </nav>
+    <script>
+      document
+        .getElementById("navToggle")
+        .addEventListener("click", function () {
+          document.getElementById("navLinks").classList.toggle("open");
+        });
+    </script>
+
+    <section class="hero">
+      <div class="hero-badge">
+        <i class="fa-solid fa-sparkles"></i>
+        <span class="badge-dot"></span>
+        🚀 AI-Powered Restaurant Recommendations ⚡
+      </div>
+      <h1>Find Your Next <span>Favourite</span> Restaurant</h1>
+      <p>Great food is one search away.</p>
+      <div class="hero-btns">
+        <a href="/recommend" class="btn-primary"
+          ><i class="fa-solid fa-magnifying-glass"></i> Start Exploring</a
+        >
+        <a href="#features" class="btn-outline">See How It Works</a>
+      </div>
+    </section>
+
+    <div class="stats-row">
+      <div class="stats-strip">
+        <div class="stat">
+          <div class="stat-num" data-target="7000" data-suffix="+">0</div>
+          <div class="stat-label">Restaurants</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-target="50" data-suffix="+">0</div>
+          <div class="stat-label">Cuisine Types</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">AI</div>
+          <div class="stat-label">Powered Matching</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">No Sign-up Needed</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function animateCounter(el) {
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || "";
+        const duration = 1800;
+        const step = target / (duration / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          el.textContent =
+            (current >= 1000
+              ? (current / 1000).toFixed(1).replace(".0", "") + ",000"
+              : Math.floor(current)) + suffix;
+        }, 16);
+      }
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              document
+                .querySelectorAll(".stat-num[data-target]")
+                .forEach(animateCounter);
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+      document
+        .querySelectorAll(".stats-strip")
+        .forEach((el) => observer.observe(el));
+    </script>
+
+    <section class="section" id="features">
+      <div class="section-title">Why Use MealMind?</div>
+      <div class="section-sub">Smart filters, smart results — every time.</div>
+      <div class="features">
+        <div class="feature-card">
+          <span class="card-number">01</span>
+          <div class="feature-icon"><i class="fa-solid fa-brain"></i></div>
+          <h3>Smart Similarity Engine</h3>
+          <p>
+            Uses TF-IDF and cosine similarity to find restaurants with matching
+            cuisine profiles.
+          </p>
+        </div>
+        <div class="feature-card">
+          <span class="card-number">02</span>
+          <div class="feature-icon"><i class="fa-solid fa-filter"></i></div>
+          <h3>Flexible Filters</h3>
+          <p>
+            Filter results by cuisine type, maximum budget, and minimum rating
+            in one go.
+          </p>
+        </div>
+        <div class="feature-card">
+          <span class="card-number">03</span>
+          <div class="feature-icon"><i class="fa-solid fa-star"></i></div>
+          <h3>Rating-Sorted Results</h3>
+          <p>
+            The highest-rated matches appear first so you always see the best
+            options on top.
+          </p>
+        </div>
+        <div class="feature-card">
+          <span class="card-number">04</span>
+          <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+          <h3>Instant Results</h3>
+          <p>
+            No accounts, no waiting. Just type a name and get personalised
+            recommendations.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-strip">
+      <div>
+        <h2>Ready to discover great food?</h2>
+        <p>Find restaurants similar to ones you already love.</p>
+      </div>
+      <a href="/recommend" class="btn-white"
+        ><i class="fa-solid fa-arrow-right"></i> &nbsp;Try It Now</a
+      >
+    </div>
+
+    <footer>
+      © 2026 MealMind &nbsp;·&nbsp; Developed By ·&nbsp; VEDANT TONE
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results — MealMind</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --green: #38bdf8; /* primary sky blue */
+        --green-dark: #0ea5e9; /* hover blue */
+        --green-light: #e0f2fe; /* light background */
+        --green-mid: #7dd3fc;
+
+        --white: #ffffff;
+
+        --bg: linear-gradient(145deg, #f8fbff 0%, #e0f2fe 60%, #f0f9ff 100%);
+
+        --text: #0f172a; /* deep gamer navy */
+        --muted: #475569; /* slate tone */
+
+        --shadow-sm: 0 2px 12px rgba(56, 189, 248, 0.12);
+        --shadow-md: 0 8px 32px rgba(56, 189, 248, 0.18);
+
+        --border: #bae6fd;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── NAVBAR ── */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 60px;
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        position: relative;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--green);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--green);
+      }
+      .nav-cta {
+        background: var(--green) !important;
+        color: var(--white) !important;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+      }
+
+      /* ── RESULTS HEADER ── */
+      .results-header {
+        padding: 48px 60px 0;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 24px;
+        transition: color 0.2s;
+      }
+      .back-link:hover {
+        color: var(--green);
+      }
+
+      .result-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 36px;
+      }
+      .result-meta h1 {
+        font-size: 26px;
+        font-weight: 700;
+      }
+      .result-meta h1 span {
+        color: var(--green);
+      }
+      .result-count {
+        background: var(--green-light);
+        color: var(--green);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 50px;
+      }
+
+      /* ── GRID ── */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 28px;
+        padding: 0 60px 60px;
+      }
+
+      /* ── MAGAZINE-STYLE GLASSMORPHISM CARD ── */
+      .card {
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        box-shadow:
+          0 4px 24px rgba(56, 189, 248, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        position: relative;
+      }
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow:
+          0 16px 48px rgba(56, 189, 248, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      }
+
+      /* ── CARD HEADER (magazine gradient section) ── */
+      .card-header {
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          #38bdf8 0%,
+          #7dd3fc 60%,
+          #bae6fd 100%
+        );
+        padding: 22px 22px 18px;
+        overflow: hidden;
+        min-height: 110px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      /* large faded food SVG in header bg */
+      .card-header-bg-icon {
+        position: absolute;
+        right: -10px;
+        bottom: -10px;
+        opacity: 0.12;
+        width: 90px;
+        height: 90px;
+      }
+
+      /* rank badge */
+      .card-rank {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--green);
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        align-self: flex-start;
+        flex-shrink: 0;
+      }
+      /* Crown for #1 */
+      .card-rank.rank-1 {
+        background: #fff9e6;
+        color: #d4a017;
+        box-shadow: 0 2px 12px rgba(212, 160, 23, 0.3);
+      }
+      .card-rank.rank-2 {
+        background: #f0f4ff;
+        color: #4a6fa5;
+      }
+      .card-rank.rank-3 {
+        background: #fff0ec;
+        color: #cd7f5a;
+      }
+
+      /* restaurant name in header */
+      .card-name {
+        font-size: 17px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.3;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        margin-top: 8px;
+        padding-right: 20px;
+      }
+
+      /* ── CARD BODY ── */
+      .card-body {
+        padding: 18px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      /* cuisine pill with icon */
+      .card-cuisine {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.15);
+        color: var(--green);
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 50px;
+        width: fit-content;
+      }
+      .card-cuisine svg {
+        flex-shrink: 0;
+      }
+
+      /* stats row */
+      .card-stats {
+        display: flex;
+        gap: 10px;
+      }
+
+      .stat-block {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(56, 189, 248, 0.12);
+        border-radius: 12px;
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .stat-block-label {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .stat-block-label svg {
+        opacity: 0.7;
+      }
+      .stat-block-value {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1;
+      }
+      .stat-block-value span {
+        font-size: 11px;
+        font-weight: 400;
+        color: var(--muted);
+        margin-left: 2px;
+      }
+      .stat-block.rating-block .stat-block-value {
+        color: var(--green);
+      }
+
+      /* visual star row */
+      .stars-row {
+        display: flex;
+        gap: 2px;
+        margin-top: 2px;
+      }
+      .stars-row svg {
+        width: 11px;
+        height: 11px;
+      }
+
+      /* sparkle badge for 4.5+ */
+      .sparkle-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: linear-gradient(135deg, #fff9e6, #fff3d6);
+        border: 1px solid rgba(212, 160, 23, 0.3);
+        color: #d4a017;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 50px;
+        width: fit-content;
+        margin-top: -4px;
+      }
+
+      /* ── EMPTY STATE ── */
+      .empty-state {
+        text-align: center;
+        padding: 80px 40px;
+      }
+      .empty-icon {
+        font-size: 52px;
+        color: var(--green-light);
+        margin-bottom: 20px;
+      }
+      .empty-state h2 {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      .empty-state p {
+        color: var(--muted);
+        font-size: 15px;
+        margin-bottom: 28px;
+      }
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--green);
+        color: var(--white);
+        padding: 12px 28px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.25s;
+      }
+      .btn-primary:hover {
+        background: var(--green-dark);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        text-align: center;
+        padding: 24px;
+        color: var(--muted);
+        font-size: 13px;
+        border-top: 1px solid #ffd0b5;
+        margin-top: auto;
+      }
+
+      /* ── HAMBURGER ── */
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+        background: none;
+        border: none;
+      }
+      .nav-toggle span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--green);
+        border-radius: 2px;
+      }
+
+      @media (max-width: 1024px) {
+        nav {
+          padding: 16px 32px;
+        }
+        .results-header {
+          padding: 36px 32px 0;
+        }
+        .grid {
+          padding: 0 32px 48px;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 14px 20px;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--white);
+          flex-direction: column;
+          gap: 0;
+          padding: 12px 0 16px;
+          box-shadow: 0 8px 24px rgba(56, 189, 248, 0.12);
+          z-index: 200;
+        }
+        .nav-links.open {
+          display: flex;
+        }
+        .nav-links a {
+          padding: 12px 24px;
+          font-size: 15px;
+          border-bottom: 1px solid #fff5ee;
+        }
+        .nav-cta {
+          margin: 10px 20px 0 !important;
+          border-radius: 50px !important;
+          text-align: center;
+        }
+        .results-header {
+          padding: 28px 20px 0;
+        }
+        .result-meta h1 {
+          font-size: 20px;
+        }
+        .grid {
+          padding: 0 20px 40px;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+        .card-name {
+          font-size: 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .result-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .result-meta h1 {
+          font-size: 18px;
+        }
+        footer {
+          font-size: 12px;
+          padding: 18px 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-brand" href="/">
+        <svg
+          width="36"
+          height="36"
+          viewBox="0 0 42 42"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            width="42"
+            height="42"
+            rx="12"
+            fill="white"
+            stroke="#5aa7ff"
+            stroke-width="1.5"
+          />
+          <path
+            d="M15 10 L15 20 Q15 25 21 25 Q27 25 27 20 L27 10"
+            stroke="#5aa7ff"
+            stroke-width="2.2"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M21 25 L21 32"
+            stroke="#5aa7ff"
+            stroke-width="2.2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M16 32 L26 32"
+            stroke="#5aa7ff"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <circle cx="31" cy="12" r="4" fill="#ff8c5a" />
+          <path
+            d="M29.5 12 L30.5 13 L32.5 11"
+            stroke="white"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        MealMind
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/recommend" class="nav-cta"
+          ><i class="fa-solid fa-magnifying-glass"></i> New Search</a
+        >
+      </div>
+    </nav>
+    <script>
+      document
+        .getElementById("navToggle")
+        .addEventListener("click", function () {
+          document.getElementById("navLinks").classList.toggle("open");
+        });
+    </script>
+
+    <div class="results-header">
+      <a href="/recommend" class="back-link"
+        ><i class="fa-solid fa-arrow-left"></i> Back to Search</a
+      >
+      <div class="result-meta">
+        {% if search_name %}
+        <h1>Restaurants similar to <span>{{ search_name }}</span></h1>
+        {% else %}
+        <h1>Recommended <span>Restaurants</span></h1>
+        {% endif %}
+        <span class="result-count"
+          ><i class="fa-solid fa-list"></i> {{ recommended_restaurants|length }}
+          result{{ 's' if recommended_restaurants|length != 1 }}</span
+        >
+      </div>
+    </div>
+
+    {% if recommended_restaurants %}
+    <div class="grid">
+      {% for r in recommended_restaurants %} {% set rating = r['Mean Rating'] %}
+      {% set rank = loop.index %}
+      <div class="card">
+        <!-- Magazine Header -->
+        <div class="card-header">
+          <!-- Large faded plate/cloche SVG in background -->
+          <svg
+            class="card-header-bg-icon"
+            viewBox="0 0 100 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <ellipse cx="50" cy="68" rx="38" ry="6" fill="white" />
+            <rect x="12" y="62" width="76" height="6" rx="3" fill="white" />
+            <path d="M20 62 Q20 28 50 28 Q80 28 80 62Z" fill="white" />
+            <rect x="44" y="20" width="12" height="10" rx="6" fill="white" />
+            <ellipse cx="50" cy="20" rx="6" ry="4" fill="white" />
+          </svg>
+
+          <!-- Rank badge -->
+          <div
+            class="card-rank {% if rank == 1 %}rank-1{% elif rank == 2 %}rank-2{% elif rank == 3 %}rank-3{% endif %}"
+          >
+            {% if rank == 1 %}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2 20h20v2H2v-2zm2-3l4-8 4 3 4-6 4 11H4z" />
+            </svg>
+            {% elif rank == 2 %}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M12 14c-4 0-6 2-6 3v1h12v-1c0-1-2-3-6-3z" />
+            </svg>
+            {% elif rank == 3 %}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" />
+            </svg>
+            {% else %} {{ rank }} {% endif %}
+          </div>
+
+          <!-- Restaurant Name -->
+          <div class="card-name">{{ r.name }}</div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+          <!-- Cuisine pill -->
+          <div class="card-cuisine">
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+              <path d="M7 2v20" />
+              <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7" />
+            </svg>
+            {{ r.cuisines | title }}
+          </div>
+
+          <!-- Rating + Budget stats -->
+          <div class="card-stats">
+            <div class="stat-block rating-block">
+              <div class="stat-block-label">
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </svg>
+                Rating
+              </div>
+              <div class="stat-block-value">
+                {{ "%.1f" | format(rating) }}<span>/ 5</span>
+              </div>
+              <div class="stars-row">
+                {% for i in range(1, 6) %} {% if rating >= i %}
+                <svg viewBox="0 0 24 24" fill="#38bdf8">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </svg>
+                {% elif rating >= i - 0.5 %}
+                <svg viewBox="0 0 24 24">
+                  <defs>
+                    <linearGradient id="half{{loop.index}}{{rank}}">
+                      <stop offset="50%" stop-color="#5aa7ff" />
+                      <stop offset="50%" stop-color="#e5e7eb" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    fill="url(#half{{loop.index}}{{rank}})"
+                  />
+                </svg>
+                {% else %}
+                <svg viewBox="0 0 24 24" fill="#e5e7eb">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </svg>
+                {% endif %} {% endfor %}
+              </div>
+            </div>
+
+            <div class="stat-block">
+              <div class="stat-block-label">
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M15 9a3 3 0 0 0-3-3H9v6h3a3 3 0 0 1 0 6H9m3-6h3" />
+                </svg>
+                Budget
+              </div>
+              <div class="stat-block-value">
+                ₹{{ "%.0f" | format(r.cost) }}<span>/ person</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sparkle badge for top-rated -->
+          {% if rating >= 4.5 %}
+          <div class="sparkle-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2l1.5 4.5H18l-3.75 2.75L15.75 14 12 11.25 8.25 14l1.5-4.75L6 6.5h4.5L12 2z"
+              />
+            </svg>
+            Top Rated Pick
+          </div>
+          {% elif rating >= 4.0 %}
+          <div
+            class="sparkle-badge"
+            style="
+              background: linear-gradient(135deg, #f0fff4, #dcfce7);
+              border-color: rgba(34, 197, 94, 0.25);
+              color: #16a34a;
+            "
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+            </svg>
+            Highly Rated
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon"><i class="fa-solid fa-plate-utensils"></i></div>
+      <h2>No Results Found</h2>
+      <p>
+        Try adjusting your filters or searching with a different restaurant
+        name.
+      </p>
+      <a href="/recommend" class="btn-primary"
+        ><i class="fa-solid fa-arrow-left"></i> Try Again</a
+      >
+    </div>
+    {% endif %}
+
+    <footer>
+      © 2026 MealMind &nbsp;·&nbsp; Developed by ·&nbsp; VEDANT TONE
+    </footer>
+  </body>
+</html>
